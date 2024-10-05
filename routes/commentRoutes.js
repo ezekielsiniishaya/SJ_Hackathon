@@ -1,44 +1,102 @@
 const express = require("express");
 const Comment = require("../models/commentModel");
 const Post = require("../models/postModel");
-const authMiddleware = require("../middleware/authMiddleware"); // Import the middleware
+const authMiddleware = require("../middleware/authMiddleware");
 const router = express.Router();
+const Notification = require("../models/notificationModel");
+
+// Like a comment
+router.put("/:commentId/like", authMiddleware, async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    const userId = req.user._id;
+
+    // Find the comment by its ID
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).json({ message: "Comment not found." });
+    }
+
+    // Check if the user has already liked the comment
+    if (comment.likes.includes(userId)) {
+      return res
+        .status(400)
+        .json({ message: "You already liked this comment." });
+    }
+
+    // Add the user's ID to the likes array
+    comment.likes.push(userId);
+    await comment.save();
+
+    // Optional: Create a notification for the comment author (if not the same as the liker)
+    if (!comment.author.equals(userId)) {
+      const notification = new Notification({
+        user: comment.author, // The comment's author
+        type: "like",
+        message: `${req.user.username} liked your comment.`,
+        relatedUser: userId, // The user liking the comment
+        post: comment.postId, // Link to the related post
+      });
+      await notification.save();
+    }
+
+    res.status(200).json({ message: "Comment liked successfully.", comment });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // Route for creating a new comment
 router.post("/", authMiddleware, async (req, res) => {
-  // Apply the auth middleware
   try {
-    const { postId, content } = req.body;
+    const { postId } = req.body;
+    const { content } = req.body;
+    const userId = req.user._id;
 
-    // Validate the input
-    if (!postId || !content) {
-      return res
-        .status(400)
-        .json({ message: "Post ID and content are required." });
+    // Validate comment content
+    if (!content) {
+      return res.status(400).json({ message: "Comment content is required." });
     }
 
-    // Check if the post exists
-    const post = await Post.findById(postId);
+    // Find the post being commented on
+    const post = await Post.findById(postId).populate("author");
     if (!post) {
       return res.status(404).json({ message: "Post not found." });
     }
 
-    // Create a new comment
+    // Create a new comment in the Comment model
     const newComment = new Comment({
-      postId,
-      author: req.user._id, // req.user._id from JWT
       content,
+      author: userId, // User making the comment
+      postId: postId, // Associate the comment with the post
     });
-
+    //send the comment to console
+    console.log("comment: ", newComment);
+    // Save the new comment
     await newComment.save();
 
-    // Push the comment ID to the post's comments array
+    // Push the new comment's ObjectId into the post's comments array
     post.comments.push(newComment._id);
     await post.save();
 
-    return res.status(201).json(newComment);
+    // Create a notification for the post author (if not the same as the commenter)
+    if (!post.author._id.equals(userId)) {
+      const notification = new Notification({
+        user: post.author._id, // The post's author
+        type: "comment",
+        message: `${req.user.username} commented on your post.`,
+        relatedUser: userId, // The user making the comment
+        post: post._id,
+      });
+      await notification.save();
+
+      // Log notification to console to verify
+      console.log("Notification created: ", notification);
+    }
+
+    res.status(201).json({ message: "Comment added successfully.", post });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 

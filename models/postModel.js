@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    required: false,
+    required: true,
   },
   content: {
     type: String,
@@ -16,11 +16,20 @@ const postSchema = new mongoose.Schema({
   },
   comments: [
     {
-      // Array to hold comments
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
     },
   ],
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  likeCount: {
+    type: Number,
+    default: 0,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

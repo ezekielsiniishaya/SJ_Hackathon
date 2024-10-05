@@ -6,7 +6,8 @@ const authRoutes = require("./routes/authRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const postRoutes = require("./routes/postRoutes");
 const logoutRoute = require("./routes/logoutRoute");
-
+const userRoutes = require("./routes/userRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 // Load environment variables
 dotenv.config();
 
@@ -21,14 +22,18 @@ connectDB();
 
 // Define your routes here
 app.get("/", (req, res) => {
-  res.send("API is running...");
+  res.send("Welcome to the web app! You can send in your requests.");
 });
 //authentication
 app.use("/auth", authRoutes);
+//user profile
+app.use("/api/users", userRoutes);
 //posts
 app.use("/api/posts", postRoutes);
+//notifications
+app.use("/api/notifications", notificationRoutes);
 //comments
-app.use("/api/comments", commentRoutes);
+app.use("/api/comment", commentRoutes);
 //logout
 app.use("/api/logout", logoutRoute);
 // Start the server

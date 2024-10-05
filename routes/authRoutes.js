@@ -2,12 +2,11 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
-const authMiddleware = require("../middleware/authMiddleware"); // Import the middleware
 const router = express.Router();
 
 // Register User
 router.post("/register", (req, res) => {
-  const { name, username, email, password } = req.body;
+  const { name, username, bio, email, password } = req.body;
 
   // Check if user already exists
   User.findOne({ email: email.toLowerCase() })
@@ -27,6 +26,7 @@ router.post("/register", (req, res) => {
         const newUser = new User({
           name,
           username,
+          bio,
           email: email.toLowerCase(),
           password: hashedPassword,
         });
