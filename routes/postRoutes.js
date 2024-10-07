@@ -11,7 +11,7 @@ router.put("/:postId/like", authMiddleware, async (req, res) => {
     const { postId } = req.params;
     const userId = req.user._id;
 
-    const post = await Post.findById(postId).populate("author");
+    const post = await Post.findById(postId).populate("author", "likes");
     if (!post) {
       return res.status(404).json({ message: "Post not found." });
     }
@@ -40,7 +40,7 @@ router.put("/:postId/like", authMiddleware, async (req, res) => {
       await notification.save();
     }
 
-    res.status(200).json({ message: "Post liked successfully." });
+    res.status(200).json(post);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -80,6 +80,38 @@ router.post("/", authMiddleware, async (req, res) => {
     await user.save(); // Save the updated user with the new post ID
 
     return res.status(201).json(savedPost);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+// Route to get user posts by their IDs
+router.get("/:userId", authMiddleware, async (req, res) => {
+  try {
+    // Find the user by ID and populate their posts
+    const user = await User.findById(req.params.userId).populate("posts");
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // Sort the user's posts in descending order based on createdAt field
+    const posts = user.posts.sort((a, b) => b.createdAt - a.createdAt);
+
+    return res.status(200).json(posts);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+//route to send all posts made by all users to the feed
+router.get("/feed/:userId", authMiddleware, async (req, res) => {
+  try {
+    // Find all posts, possibly sorted by creation date or likes
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate("author", "username"); // Sorting by latest posts
+    //console.log(posts);
+    // Return all posts to the requesting user
+    return res.status(200).json(posts);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
