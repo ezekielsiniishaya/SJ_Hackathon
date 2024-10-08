@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConnectSphere - Notifications</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet" />
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/styles.css">
@@ -43,40 +47,42 @@
                 </nav>
             </div>
         </header>
+        <main>
 
-        <!-- Notifications Section -->
-        <section class="py-5 content" id="notificationsSection">
-            <div class="container">
-                <div class="d-flex justify-content-center">
-                    <div class="col-md-8">
-                        <h3 class="text-center mb-4">Notifications</h3>
+            <!-- Notifications Section -->
+            <section class="py-5 content" id="notificationsSection">
+                <div class="container">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-8">
+                            <h3 class="text-center mb-4">Notifications</h3>
 
-                        <!-- Mark All as Read Button -->
-                        <div class="text-right mb-3">
-                            <button id="markAllRead" class="btn btn-outline-primary btn-sm">Mark All as Read</button>
-                        </div>
-
-                        <!-- Notifications List -->
-                        <div id="notificationsContainer">
-                            <!-- Each notification will be appended here -->
-                            <div class="notification mb-3 p-3 border rounded bg-light">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="notification-title">New Comment on your Post</h5>
-                                    <p class="notification-date text-muted">2024-10-07</p>
-                                </div>
-                                <p class="notification-message">
-                                    JohnDoe commented: "Great post!"
-                                </p>
-                                <button class="btn btn-outline-secondary btn-sm">Mark as Read</button>
+                            <!-- Mark All as Read Button -->
+                            <div class="text-right mb-3">
+                                <button id="markAllRead" class="btn btn-outline-primary btn-sm">Mark All as
+                                    Read</button>
                             </div>
-                            <!-- More notifications will be added dynamically -->
-                        </div>
 
+                            <!-- Notifications List -->
+                            <div id="notificationsContainer">
+                                <!-- Each notification will be appended here -->
+                                <div class="notification mb-3 p-3 border rounded bg-light">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="notification-title">New Comment on your Post</h5>
+                                        <p class="notification-date text-muted">2024-10-07</p>
+                                    </div>
+                                    <p class="notification-message">
+                                        JohnDoe commented: "Great post!"
+                                    </p>
+                                    <button class="btn btn-outline-secondary btn-sm">Mark as Read</button>
+                                </div>
+                                <!-- More notifications will be added dynamically -->
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
+            </section>
+        </main>
         <!-- Footer Section -->
         <footer class="bg-primary text-white text-center">
             <p>&copy; 2024 ConnectSphere. All rights reserved.</p>

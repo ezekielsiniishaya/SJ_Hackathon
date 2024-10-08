@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConnectSphere - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet" />
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/styles.css" />
@@ -41,38 +45,40 @@
             </nav>
         </div>
     </header>
-    <!-- Login Form Section -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Login</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <form id="loginForm" class="form" method="POST" action="http://localhost:5000/auth/login">
-                                <div class="form-group">
-                                    <label for="email">Email address</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="Enter email" required>
+    <main>
+        <!-- Login Form Section -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Login</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <form id="loginForm" class="form" method="POST"
+                                    action="http://localhost:5000/auth/login">
+                                    <div class="form-group">
+                                        <label for="email">Email address</label>
+                                        <input type="email" class="form-control" id="email" name="email"
+                                            placeholder="Enter email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                            placeholder="Password" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                </form>
+                                <div class="text-center mt-3">
+                                    <p>Don't have an account? <a href="register.html">Register</a></p>
                                 </div>
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password"
-                                        placeholder="Password" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-block">Login</button>
-                            </form>
-                            <div class="text-center mt-3">
-                                <p>Don't have an account? <a href="register.html">Register</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div id="alert" class="alert" style="display: none;"></div>
-    </section>
-
+            <div id="alert" class="alert" style="display: none;"></div>
+        </section>
+    </main>
     <!-- Footer Section -->
     <footer class="bg-primary text-white text-center py-3">
         <p>&copy; 2024 ConnectSphere. All rights reserved.</p>

@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConnectSphere - Create Post</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet" />
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -35,30 +39,32 @@
             </nav>
         </div>
     </header>
-    <!-- Create Post Section -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4">Create a Post</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <form id="create-post-form">
-                        <div class="form-group">
-                            <label for="postTitle">Post Title</label>
-                            <input type="text" class="form-control" id="postTitle" placeholder="Enter post title"
-                                required>
-                        </div>
-                        <div class="form-group">
-                            <label for="postContent">Post Content</label>
-                            <textarea class="form-control" id="postContent" rows="6" placeholder="Write your post..."
-                                required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block" id="create-post-btn">Create
-                            Post</button>
-                    </form>
+    <main>
+        <!-- Create Post Section -->
+        <section class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-4">Create a Post</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <form id="create-post-form">
+                            <div class="form-group">
+                                <label for="postTitle">Post Title</label>
+                                <input type="text" class="form-control" id="postTitle" placeholder="Enter post title"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label for="postContent">Post Content</label>
+                                <textarea class="form-control" id="postContent" rows="6"
+                                    placeholder="Write your post..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" id="create-post-btn">Create
+                                Post</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer Section -->
     <footer class="bg-primary text-white text-center py-3">

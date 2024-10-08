@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ConnectSphere - Feeds</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet" />
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/styles.css">
@@ -44,40 +48,41 @@
                 </nav>
             </div>
         </header>
+        <main>
+            <!-- Feeds Section -->
+            <section class="py-5 content" id="feedsSection">
+                <div id="alert" class="alert" style="display: none;"></div>
+                <div class="container">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-8 feed-card">
+                            <h3 class="text-center mb-4">Feeds</h3>
 
-        <!-- Feeds Section -->
-        <section class="py-5 content" id="feedsSection">
-            <div id="alert" class="alert" style="display: none;"></div>
-            <div class="container">
-                <div class="d-flex justify-content-center">
-                    <div class="col-md-8 feed-card">
-                        <h3 class="text-center mb-4">Feeds</h3>
-
-                        <!-- Feed Posts -->
-                        <div id="feedsContainer">
-                            <!-- Each post will be appended here -->
-                            <div class="post mb-4">
-                                <div class="post-header d-flex justify-content-between">
-                                    <h5 class="post-author">Username</h5>
-                                    <p class="post-date text-muted">Posted on: <span>2024-10-07</span></p>
+                            <!-- Feed Posts -->
+                            <div id="feedsContainer">
+                                <!-- Each post will be appended here -->
+                                <div class="post mb-4">
+                                    <div class="post-header d-flex justify-content-between">
+                                        <h5 class="post-author">Username</h5>
+                                        <p class="post-date text-muted">Posted on: <span>2024-10-07</span></p>
+                                    </div>
+                                    <p class="post-content">
+                                        This is a sample post content. Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing
+                                        elit.
+                                    </p>
+                                    <div class="post-footer d-flex justify-content-between">
+                                        <button class="btn btn-outline-primary btn-sm">Like</button>
+                                        <button class="btn btn-outline-secondary btn-sm">Comment</button>
+                                    </div>
                                 </div>
-                                <p class="post-content">
-                                    This is a sample post content. Lorem ipsum dolor sit amet, consectetur adipiscing
-                                    elit.
-                                </p>
-                                <div class="post-footer d-flex justify-content-between">
-                                    <button class="btn btn-outline-primary btn-sm">Like</button>
-                                    <button class="btn btn-outline-secondary btn-sm">Comment</button>
-                                </div>
+                                <!-- More posts will be added dynamically -->
                             </div>
-                            <!-- More posts will be added dynamically -->
-                        </div>
 
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
+            </section>
+        </main>
         <!-- Footer Section -->
         <footer class="bg-primary text-white text-center">
             <p>&copy; 2024 ConnectSphere. All rights reserved.</p>

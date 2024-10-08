@@ -47,20 +47,8 @@
 }
 
 /* Ensure the entire page takes up full height */
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
 
 /* Flexbox layout for the page */
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Full viewport height */
-}
 
 /* Main content should grow to take available space */
 .content {
@@ -69,7 +57,7 @@ body {
 
 /* Hero section: Adjust height and padding for responsiveness */
 .hero {
-  min-height: 70vh; /* Responsive height for hero section */
+  min-height: 100vh; /* Responsive height for hero section */
   padding: 40px 0; /* Add padding for better spacing */
 }
 
@@ -90,11 +78,28 @@ footer {
   position: relative;
   width: 100%;
 }
+main {
+  width: 100%;
+  height: 100vh;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
 
+  line-height: 1.6;
+  width: 100%;
+}
 /* Responsive media queries for mobile devices */
 @media (max-width: 800px) {
   .hero {
-    min-height: 100%; /* Reduce height on smaller screens */
+    height: 60vh; /* Reduce height on smaller screens */
     padding: 20px 0;
   }
 
