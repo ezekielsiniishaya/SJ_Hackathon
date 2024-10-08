@@ -92,7 +92,7 @@ app.use("/api/comment", commentRoutes);
 app.use("/api/logout", logoutRoute);
 
 // Start the server
-const PORT = process.env.PORT || 5000; // Provide a default port if not specified
+const PORT = process.env.PORT; // Provide a default port if not specified
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
