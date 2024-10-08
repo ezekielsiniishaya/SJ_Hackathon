@@ -19,6 +19,36 @@ document.addEventListener("DOMContentLoaded", async function () {
       "<p>Error loading posts. Please try again.</p>";
     loadingIndicator.style.display = "none"; // Hide loading indicator on error
   }
+  document
+    .getElementById("logout-btn")
+    .addEventListener("click", async function () {
+      const token = localStorage.getItem("authToken"); // Replace 'token' with how you're storing it
+
+      try {
+        const response = await fetch("/api/logout", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`, // Send token in the Authorization header
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Remove the token from local storage after successful logout
+          localStorage.removeItem("token");
+          alert(data.message);
+          window.location.href = "login.html"; // Redirect to login page after logout
+        } else {
+          console.error("Logout error:", data.message);
+          alert("Error during logout: " + data.message);
+        }
+      } catch (error) {
+        console.error("Error during logout request:", error);
+        alert("Failed to logout. Try again.");
+      }
+    });
 });
 
 // Show alert function
