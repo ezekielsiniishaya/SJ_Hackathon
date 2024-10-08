@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // console.log("Data to send:", JSON.stringify(data)); // Log the data before sending
 
       try {
-        const response = await fetch("http://localhost:5000/auth/register", {
+        const response = await fetch("/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const response = await fetch("http://localhost:5000/auth/login", {
+        const response = await fetch("/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("userData", JSON.stringify(user)); // Store user data in local storage
 
             // Redirect to the profile page
-            window.location.href = "http://localhost:5000/profile";
+            window.location.href = "/profile";
           } else {
             showAlert("Login successful, but no profile data found.");
           }
