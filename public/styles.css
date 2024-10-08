@@ -94,7 +94,7 @@ footer {
 /* Responsive media queries for mobile devices */
 @media (max-width: 800px) {
   .hero {
-    min-height: 50vh; /* Reduce height on smaller screens */
+    min-height: 100%; /* Reduce height on smaller screens */
     padding: 20px 0;
   }
 
