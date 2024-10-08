@@ -31,7 +31,7 @@ async function fetchPosts(userId) {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/posts/feed/${userId}`, // Use userId in the URL
+      `/api/posts/feed/${userId}`, // Use userId in the URL
       {
         method: "GET",
         headers: {
@@ -136,7 +136,7 @@ async function likePost(postId) {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/posts/${postId}/like`,
+      `/api/posts/${postId}/like`,
       {
         method: "PUT",
         headers: {
@@ -190,7 +190,7 @@ async function submitComment(
   } Comments</strong>`; // Update comment count
 
   try {
-    const response = await fetch(`http://localhost:5000/api/comment/`, {
+    const response = await fetch(`/api/comment/`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`, // Include the token in the request
@@ -222,7 +222,7 @@ async function loadComments(postId, commentsContainer) {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/comment/posts/${postId}/comments`,
+      `/api/comment/posts/${postId}/comments`,
       {
         method: "GET",
         headers: {
