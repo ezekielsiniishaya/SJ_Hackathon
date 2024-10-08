@@ -90,7 +90,7 @@ async function loadUserPosts(userId) {
     //console.log(token);
     // Fetch posts from followed users
     /*  const followedResponse = await fetch(
-        `http://localhost:5000/api/posts/followed/${userId}/`,
+        `/api/posts/followed/${userId}/`,
         {
           method: "GET",
           headers: {
@@ -193,7 +193,7 @@ async function loadComments(postId, commentsContainer) {
 
   try {
     const response = await fetch(
-      `http://localhost:5000/api/comment/posts/${postId}/comments`,
+      `/api/comment/posts/${postId}/comments`,
       {
         method: "GET",
         headers: {
@@ -259,7 +259,7 @@ async function postComment(postId, content, commentCountElement) {
     currentComments + 1
   } Comments</strong>`;
   try {
-    const response = await fetch(`http://localhost:5000/api/comment/`, {
+    const response = await fetch(`/api/comment/`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`, // Include the token in the request
