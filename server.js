@@ -27,8 +27,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Serve static files only to authenticated users
 app.use("/public", express.static(path.join(__dirname, "public"))); // Protect static files
 app.use(express.static("views"));
+
 // Use CORS if necessary
-app.use(cors());
+app.use(
+  cors({
+    origin: "*", // Allows requests from any origin
+    credentials: true, // Optional: Enable this if your frontend sends credentials like cookies or authorization headers
+  })
+);
 
 // Connect to the database
 connectDB();
@@ -45,9 +51,11 @@ app.get("/auth/register", (req, res) => {
 app.get("/auth/login", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "login.html")); // Serve login.html
 });
+
 app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "about.html")); // Serve about.html
 });
+
 // Protect these routes with the authMiddleware
 app.get("/profile", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "profile.html")); // Serve profile.html
@@ -56,23 +64,30 @@ app.get("/profile", (req, res) => {
 app.get("/post", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "post.html")); // Serve post.html
 });
+
 app.get("/feeds", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "feeds.html")); // Serve post.html
+  res.sendFile(path.join(__dirname, "views", "feeds.html")); // Serve feeds.html
 });
+
 app.get("/notifications", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "notifications.html")); // Serve post.html
+  res.sendFile(path.join(__dirname, "views", "notifications.html")); // Serve notifications.html
 });
+
 // Authentication
 app.use("/auth", authRoutes);
+
 // User profile
 app.use("/api/users", userRoutes);
+
 // Posts
 app.use("/api/posts", postRoutes);
 
 // Notifications
 app.use("/api/notifications", notificationRoutes);
+
 // Comments
 app.use("/api/comment", commentRoutes);
+
 // Logout
 app.use("/api/logout", logoutRoute);
 
