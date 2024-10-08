@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // Redirect to the login page after successful registration
           setTimeout(() => {
-            window.location.href = "http://localhost:5000/auth/login"; // Redirect to login
+            window.location.href = "/auth/login"; // Redirect to login
           }, 2000);
         }
       } catch (error) {

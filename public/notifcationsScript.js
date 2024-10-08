@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const loadingIndicator = document.getElementById("loadingIndicator");
-  const mainContent = document.getElementById("mainContent");
 
   // Show loading indicator while fetching notifications
   loadingIndicator.style.display = "flex";
@@ -11,8 +10,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Hide loading indicator after fetching data
     loadingIndicator.style.display = "none";
-    // Show the main content
-    // mainContent.style.display = "block";
   } catch (error) {
     console.error("Error loading notifications:", error);
     loadingIndicator.innerHTML =
@@ -83,24 +80,14 @@ function renderNotifications(notifications) {
 
     notificationElement.innerHTML = notificationHeader;
 
-    // Display the read status or "Mark as Read" button
+    // Display the read status
     const readStatus = document.createElement("span");
     if (notification.read) {
       readStatus.classList.add("badge", "badge-success");
       readStatus.textContent = "Read";
     } else {
-      const markAsReadBtn = document.createElement("button");
-      markAsReadBtn.classList.add("btn", "btn-outline-secondary", "btn-sm");
-      markAsReadBtn.textContent = "Not Read";
-      markAsReadBtn.addEventListener("click", async () => {
-        try {
-          await markNotificationAsRead(notification._id);
-          fetchNotifications(); // Refresh notifications
-        } catch (err) {
-          console.error("Error marking notification as read:", err);
-        }
-      });
-      notificationElement.appendChild(markAsReadBtn);
+      readStatus.classList.add("badge", "badge-secondary");
+      readStatus.textContent = "Not Read";
     }
 
     notificationElement.appendChild(readStatus);
@@ -108,19 +95,30 @@ function renderNotifications(notifications) {
   });
 }
 
-// Function to mark a specific notification as read
-async function markNotificationAsRead(notificationId) {
+// Function to mark all notifications as read
+async function markAsRead() {
   try {
     const token = localStorage.getItem("authToken");
 
-    await fetch(`/api/notifications/${notificationId}/read`, {
+    const response = await fetch(`/api/notifications/read`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
+
+    if (!response.ok) {
+      throw new Error("Failed to mark notifications as read");
+    }
+
+    // Optionally handle the response data
+    const data = await response.json();
+    //console.log("All notifications marked as read:", data);
+
+    // After marking as read, fetch notifications again to update the UI
+    await fetchNotifications(); // Refresh notifications after marking as read
   } catch (err) {
-    console.error("Error marking notification as read:", err);
+    console.error("Error marking notifications as read:", err);
   }
 }

@@ -43,11 +43,11 @@ router.post("/register", (req, res) => {
           .save()
           .then((savedUser) => {
             res.status(201).json({ message: "Registration successful." });
-            console.log("User registered successfully:", savedUser);
+            //console.log("User registered successfully:", savedUser);
           })
           .catch((saveError) => {
             console.error("Error saving user:", saveError.message);
-            res.status(500).json({ message: "Error saving user" });
+            res.status(500).json({ message: "Username already taken" });
           });
       });
     })

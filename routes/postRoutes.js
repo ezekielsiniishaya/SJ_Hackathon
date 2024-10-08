@@ -70,7 +70,7 @@ router.post("/", authMiddleware, async (req, res) => {
       author: req.user._id, // Use req.user._id from the decoded JWT token
     });
     //log post to the console
-    console.log("Post: ", newPost);
+    //console.log("Post: ", newPost);
     // Save the post in the database
     const savedPost = await newPost.save();
 
