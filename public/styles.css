@@ -120,9 +120,7 @@ main {
     height: 40vh; /* Reduce height on smaller screens */
     padding: 20px 0;
   }
-  main {
-    flex: -1; /* Ensures that the main content takes up the available space */
-  }
+  
   .hero h1 {
     font-size: 2rem; /* Smaller heading for mobile */
   }
