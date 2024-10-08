@@ -26,7 +26,7 @@ document
       if (response.ok) {
         const result = await response.json(); // Parse the JSON response
         alert("Post created successfully!"); // Show success message
-
+        updatePostCount();
         // Redirect to the feeds page
         window.location.href = "feeds.html"; // Redirect to feeds page
       } else {
@@ -38,3 +38,15 @@ document
       alert("Failed to create post. Please try again."); // Handle fetch error
     }
   });
+//function to update postcount
+function updatePostCount() {
+  // Fetch the updated profile data, including the post count
+  fetch("/api/userProfile") // Assuming this endpoint returns profile data
+    .then((response) => response.json())
+    .then((profileData) => {
+      document.getElementById("posts").innerText = profileData.postCount;
+    })
+    .catch((error) => {
+      console.error("Error updating post count:", error);
+    });
+}

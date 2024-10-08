@@ -4,7 +4,7 @@ const User = require("../models/userModel");
 const authMiddleware = require("../middleware/authMiddleware");
 
 // Route for fetching user profile data
-router.get("/profile", authMiddleware, async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
@@ -13,14 +13,17 @@ router.get("/profile", authMiddleware, async (req, res) => {
 
     const gravatarUrl = user.getGravatarUrl(200); // Fetch Gravatar URL for this user
     return res.status(200).json({
+      _id: user._id,
       name: user.name,
       username: user.username,
       email: user.email,
       bio: user.bio,
-      profilePicture: gravatarUrl, // Use Gravatar URL as profile picture
-      followers: user.followers.length,
-      following: user.following.length,
-      posts: user.posts.length,
+      followers: user.followers,
+      following: user.following,
+      posts: user.posts,
+      likesGiven: user.likesGiven,
+      profilePicture: user.profilePicture,
+      lastLogin: user.lastLogin,
       createdAt: user.createdAt,
     });
   } catch (err) {

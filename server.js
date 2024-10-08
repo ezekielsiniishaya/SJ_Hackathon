@@ -40,36 +40,39 @@ app.use(
 connectDB();
 
 // Define your routes here
+app.get("/profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "profile.html"));
+});
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "index.html")); // Serve index.html
+  res.sendFile(path.join(__dirname, "views", "index.html"));
+});
+app.get("/feeds", authMiddleware, (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "feeds.html"));
 });
 
+// Free access to login and registration pages
 app.get("/auth/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "register.html")); // Serve register.html
+  res.sendFile(path.join(__dirname, "views", "register.html"));
 });
 
 app.get("/auth/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "login.html")); // Serve login.html
+  res.sendFile(path.join(__dirname, "views", "login.html"));
 });
-
 app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "about.html")); // Serve about.html
 });
 
 // Protect these routes with the authMiddleware
-app.get("/profile", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "profile.html")); // Serve profile.html
-});
 
-app.get("/post", (req, res) => {
+app.get("/post", authMiddleware, (req, res) => {
   res.sendFile(path.join(__dirname, "views", "post.html")); // Serve post.html
 });
 
-app.get("/feeds", (req, res) => {
+app.get("/feeds", authMiddleware, (req, res) => {
   res.sendFile(path.join(__dirname, "views", "feeds.html")); // Serve feeds.html
 });
 
-app.get("/notifications", (req, res) => {
+app.get("/notifications", authMiddleware, (req, res) => {
   res.sendFile(path.join(__dirname, "views", "notifications.html")); // Serve notifications.html
 });
 
@@ -90,6 +93,7 @@ app.use("/api/comment", commentRoutes);
 
 // Logout
 app.use("/api/logout", logoutRoute);
+app.use("/api/profile", userRoutes);
 
 // Start the server
 const PORT = process.env.PORT; // Provide a default port if not specified

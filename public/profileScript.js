@@ -1,3 +1,53 @@
+document.addEventListener("DOMContentLoaded", async function () {
+  const loadingIndicator = document.getElementById("loadingIndicator");
+  const mainContent = document.getElementById("mainContent");
+
+  // Show loading indicator
+  //loadingIndicator.style.display = "flex";
+
+  try {
+    // Simulate a data fetching process
+    await loadProfile(); // Your data-fetching function
+
+    // Hide loading indicator after fetching data
+    loadingIndicator.style.display = "none";
+
+    document
+      .getElementById("logout-btn")
+      .addEventListener("click", async function () {
+        const token = localStorage.getItem("authToken"); // Replace 'token' with how you're storing it
+
+        try {
+          const response = await fetch("/api/logout", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`, // Send token in the Authorization header
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Remove the token from local storage after successful logout
+            localStorage.removeItem("token");
+            alert(data.message);
+            window.location.href = "login.html"; // Redirect to login page after logout
+          } else {
+            console.error("Logout error:", data.message);
+            alert("Error during logout: " + data.message);
+          }
+        } catch (error) {
+          console.error("Error during logout request:", error);
+          alert("Failed to logout. Try again.");
+        }
+      });
+  } catch (error) {
+    //console.error("Error loading profile:", error);
+    // Optionally, display an error message
+  }
+});
+
 // Show alert function
 function showAlert(message) {
   const alertBox = document.getElementById("alert");
@@ -10,7 +60,37 @@ function showAlert(message) {
     alertBox.style.display = "none"; // Hide alert
   }, 5000);
 }
+async function postComment(postId, content, commentCountElement) {
+  const token = localStorage.getItem("authToken"); // Retrieve the token from local storage
 
+  const currentComments = parseInt(commentCountElement.textContent) || 0; // Get current comment count
+  commentCountElement.innerHTML = `<strong>${
+    currentComments + 1
+  } Comments</strong>`;
+  try {
+    const response = await fetch(`/api/comment/`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the request
+        "Content-Type": "application/json", // Specify content type as JSON
+      },
+      body: JSON.stringify({ postId, content }), // Send postId and content in the body
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      // Handle success (e.g., show success message or update the UI)
+      //console.log("Comment posted:", result);
+    } else {
+      const errorData = await response.json();
+      console.error("Error posting comment:", errorData.message);
+      // Handle error (e.g., show error message)
+    }
+  } catch (error) {
+    console.error("Network error:", error);
+    // Handle network error
+  }
+}
 // Function to update profile elements
 function updateProfile(userData) {
   const name = document.getElementById("name");
@@ -48,27 +128,45 @@ function updateProfile(userData) {
     following.textContent = userData.following.length + " Following" || 0; // Count following
   }
 }
-
-// Load the profile once DOM is ready
 async function loadProfile() {
-  // Check if userData is stored in local storage
-  const userData = JSON.parse(localStorage.getItem("userData"));
-  //const userId = localStorage.getItem("userId"); // Get user ID from local storage
-  //console.log("User ID:", userId); // Log the user ID to check its value
-  // loadUserPosts(userId); // Call loadUserPosts with the valid userId
+  const token = localStorage.getItem("authToken");
 
-  if (userData) {
-    //console.log("User data loaded from local storage:", userData);
-    updateProfile(userData); // Update the profile elements with the fetched data
-    loadUserPosts(userData._id); // Load user posts with the dynamic user ID
-  } else {
-    showAlert("User data not found in local storage. Please log in again.");
+  if (!token) {
+    // Redirect to login if no token is found
+    window.location.href = "/auth/login";
+    return;
   }
-  //console.log(userData._id);
-  //console.log(userId);
+
+  try {
+    // Fetch user data from the server
+    const response = await fetch("/api/profile", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Include token for authentication
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user data. Please log in again.");
+    }
+
+    const userData = await response.json(); // Parse the response JSON
+
+    // If userData is received successfully, load the posts and update profile elements
+    if (userData) {
+      updateProfile(userData);
+      // Load user posts with the user's dynamic ID
+      loadUserPosts(userData._id);
+    }
+  } catch (error) {
+    console.error("Error loading profile:", error);
+    showAlert("Failed to load profile. Please try again.");
+    // Optionally, log the user out or prompt to re-login
+    window.location.href = "/auth/login";
+  }
 }
-//const userId = userData._id;
-// console.log(userId);
+
 async function loadUserPosts(userId) {
   const token = localStorage.getItem("authToken"); // Retrieve the token from local storage
 
@@ -163,6 +261,7 @@ function displayUserPosts(posts) {
         postCommentBtn.style.display = "none"; // Hide button
       }
     });
+    //function to update postcount
 
     // Add functionality to post a comment
     const postCommentButton = postElement.querySelector(".post-comment-btn");
@@ -215,64 +314,3 @@ async function loadComments(postId, commentsContainer) {
   }
 }
 loadProfile();
-document
-  .getElementById("logout-btn")
-  .addEventListener("click", async function () {
-    const token = localStorage.getItem("authToken"); // Replace 'token' with how you're storing it
-
-    try {
-      const response = await fetch("/api/logout", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`, // Send token in the Authorization header
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        // Remove the token from local storage after successful logout
-        localStorage.removeItem("token");
-        alert(data.message);
-        window.location.href = "login.html"; // Redirect to login page after logout
-      } else {
-        console.error("Logout error:", data.message);
-        alert("Error during logout: " + data.message);
-      }
-    } catch (error) {
-      console.error("Error during logout request:", error);
-      alert("Failed to logout. Try again.");
-    }
-  });
-async function postComment(postId, content, commentCountElement) {
-  const token = localStorage.getItem("authToken"); // Retrieve the token from local storage
-
-  const currentComments = parseInt(commentCountElement.textContent) || 0; // Get current comment count
-  commentCountElement.innerHTML = `<strong>${
-    currentComments + 1
-  } Comments</strong>`;
-  try {
-    const response = await fetch(`/api/comment/`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`, // Include the token in the request
-        "Content-Type": "application/json", // Specify content type as JSON
-      },
-      body: JSON.stringify({ postId, content }), // Send postId and content in the body
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      // Handle success (e.g., show success message or update the UI)
-      console.log("Comment posted:", result);
-    } else {
-      const errorData = await response.json();
-      console.error("Error posting comment:", errorData.message);
-      // Handle error (e.g., show error message)
-    }
-  } catch (error) {
-    console.error("Network error:", error);
-    // Handle network error
-  }
-}

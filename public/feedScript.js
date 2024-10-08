@@ -1,3 +1,26 @@
+document.addEventListener("DOMContentLoaded", async function () {
+  const loadingIndicator = document.getElementById("loadingIndicator");
+  const feedsContainer = document.getElementById("feedsContainer");
+
+  // Show loading indicator while fetching posts
+  loadingIndicator.style.display = "flex";
+
+  try {
+    const userId = localStorage.getItem("userId"); // Assuming you store userId in localStorage
+    await fetchPosts(userId); // Fetch posts using userId
+
+    // Hide loading indicator after fetching data
+    loadingIndicator.style.display = "none";
+    // Show the feeds container
+    feedsContainer.style.display = "block"; // If you want to show feeds after loading
+  } catch (error) {
+    console.error("Error loading posts:", error);
+    loadingIndicator.innerHTML =
+      "<p>Error loading posts. Please try again.</p>";
+    loadingIndicator.style.display = "none"; // Hide loading indicator on error
+  }
+});
+
 // Show alert function
 function showAlert(message) {
   const alertBox = document.getElementById("alert");
@@ -11,21 +34,6 @@ function showAlert(message) {
   }, 5000);
 }
 
-document
-  .getElementById("feeds-btn")
-  .addEventListener("click", async function () {
-    // Fetch user-specific posts and display them
-    const userData = JSON.parse(localStorage.getItem("userData"));
-    const userId = userData._id;
-    console.log("User ID:", userId);
-
-    if (userId) {
-      await fetchPosts(userId); // Pass userId to fetchPosts
-      window.location.href = "feeds.html"; // Redirect to feed page after posts are fetched and displayed
-    } else {
-      showAlert("User ID not found. Please log in again.");
-    }
-  });
 async function fetchPosts(userId) {
   const token = localStorage.getItem("authToken"); // Get auth token
 
@@ -52,6 +60,7 @@ async function fetchPosts(userId) {
     showAlert("Failed to load posts.");
   }
 }
+
 async function displayUserPosts(posts) {
   const userPostsContainer = document.getElementById("feedsContainer");
   userPostsContainer.innerHTML = ""; // Clear previous posts
@@ -130,21 +139,19 @@ async function displayUserPosts(posts) {
     });
   });
 }
-//function to like post
+
+// Function to like post
 async function likePost(postId) {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch(
-      `/api/posts/${postId}/like`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`/api/posts/${postId}/like`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (response.ok) {
       const updatedPost = await response.json(); // Get the updated post data
@@ -221,15 +228,12 @@ async function loadComments(postId, commentsContainer) {
   const token = localStorage.getItem("authToken");
 
   try {
-    const response = await fetch(
-      `/api/comment/posts/${postId}/comments`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`/api/comment/posts/${postId}/comments`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (response.ok) {
       const comments = await response.json();
@@ -250,5 +254,8 @@ async function loadComments(postId, commentsContainer) {
     showAlert("Failed to load comments.");
   }
 }
+
 // On page load, fetch and display posts
-window.onload = fetchPosts;
+document.addEventListener("DOMContentLoaded", () => {
+  fetchPosts(); // Trigger fetchPosts function on load
+});
