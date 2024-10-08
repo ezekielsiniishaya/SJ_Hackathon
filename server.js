@@ -59,6 +59,9 @@ app.get("/post", (req, res) => {
 app.get("/feeds", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "feeds.html")); // Serve post.html
 });
+app.get("/notifications", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "notifications.html")); // Serve post.html
+});
 // Authentication
 app.use("/auth", authRoutes);
 // User profile

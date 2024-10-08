@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Validate Password Length
-      if (passwordInput.length < 6) {
-        errorMessage = "Password must be at least 6 characters.";
+      if (passwordInput.length < 4) {
+        errorMessage = "Password must be at least 4 characters.";
         isValid = false;
       }
 
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         password: passwordInput,
         email: emailInput,
       };
-      console.log("Data to send:", JSON.stringify(data)); // Log the data before sending
+      // console.log("Data to send:", JSON.stringify(data)); // Log the data before sending
 
       try {
         const response = await fetch("http://localhost:5000/auth/register", {

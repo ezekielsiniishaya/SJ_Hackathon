@@ -13,8 +13,8 @@ router.post("/register", (req, res) => {
   }
 
   // Log incoming data
-  console.log("Registration data received:", req.body);
-  console.log(name, email, username, bio, password);
+  //console.log("Registration data received:", req.body);
+  //console.log(name, email, username, bio, password);
   // Check if user already exists (case-insensitive)
   User.findOne({ email: { $regex: new RegExp("^" + email + "$", "i") } }) // Case-insensitive regex search
     .then((existingUser) => {
@@ -61,11 +61,11 @@ router.post("/register", (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
+    //console.log(email, password);
 
     // Find the user by email
     const user = await User.findOne({ email: email.toLowerCase() });
-    console.log("User found:", user); // Debug: Log the found user
+    // console.log("User found:", user); // Debug: Log the found user
 
     if (!user) {
       return res.status(400).json({ message: "User not found" });
@@ -73,7 +73,7 @@ router.post("/login", async (req, res) => {
 
     // Compare the password
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("Password match:", isMatch); // Debug: Log comparison result
+    //console.log("Password match:", isMatch); // Debug: Log comparison result
 
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });

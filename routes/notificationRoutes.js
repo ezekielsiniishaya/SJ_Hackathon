@@ -4,6 +4,7 @@ const Notification = require("../models/notificationModel");
 const authMiddleware = require("../middleware/authMiddleware");
 
 // Get notifications for the logged-in user
+// Get notifications for the logged-in user
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const notifications = await Notification.find({ user: req.user._id })
@@ -11,9 +12,9 @@ router.get("/", authMiddleware, async (req, res) => {
       .populate("relatedUser", "username")
       .populate("post", "title");
 
-    res.status(200).json(notifications);
+    res.status(200).json(notifications); // Ensure this is JSON
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message }); // Return JSON even in case of an error
   }
 });
 
