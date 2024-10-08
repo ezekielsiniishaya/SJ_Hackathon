@@ -74,15 +74,12 @@ async function loadUserPosts(userId) {
 
   try {
     // Fetch posts by the user with authorization header
-    const userResponse = await fetch(
-      `http://localhost:5000/api/posts/${userId}/`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the request
-        },
-      }
-    );
+    const userResponse = await fetch(`/api/posts/${userId}/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the request
+      },
+    });
     if (!userResponse.ok) {
       throw new Error(`HTTP error! status: ${userResponse.status}`);
     }
@@ -192,15 +189,12 @@ async function loadComments(postId, commentsContainer) {
   const token = localStorage.getItem("authToken"); // Get the token
 
   try {
-    const response = await fetch(
-      `/api/comment/posts/${postId}/comments`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the request
-        },
-      }
-    );
+    const response = await fetch(`/api/comment/posts/${postId}/comments`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the token in the request
+      },
+    });
 
     if (response.ok) {
       const comments = await response.json();
