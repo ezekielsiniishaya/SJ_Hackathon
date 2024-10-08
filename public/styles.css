@@ -45,25 +45,40 @@
 .modal-content {
   border-radius: 10px;
 }
+
 /* Ensure the entire page takes up full height */
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Flexbox layout for the page */
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  /* Full viewport height */
+  min-height: 100vh; /* Full viewport height */
 }
 
 /* Main content should grow to take available space */
 .content {
   flex-grow: 1;
+}
+
+/* Hero section: Adjust height and padding for responsiveness */
+.hero {
+  min-height: 70vh; /* Responsive height for hero section */
+  padding: 40px 0; /* Add padding for better spacing */
+}
+
+.hero h1 {
+  font-size: 2.5rem; /* Make heading smaller on smaller screens */
+}
+
+.hero p {
+  font-size: 1.25rem; /* Adjust paragraph font size */
 }
 
 /* Ensure footer sticks to the bottom */
@@ -72,4 +87,37 @@ footer {
   color: white;
   text-align: center;
   padding: 10px 0;
+  position: relative;
+  width: 100%;
+}
+
+/* Responsive media queries for mobile devices */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 50vh; /* Reduce height on smaller screens */
+    padding: 20px 0;
+  }
+
+  .hero h1 {
+    font-size: 2rem; /* Smaller heading for mobile */
+  }
+
+  .hero p {
+    font-size: 1rem; /* Smaller paragraph for mobile */
+  }
+
+  .navbar-nav {
+    text-align: center; /* Center nav items on mobile */
+  }
+
+  .profile-card img {
+    width: 100px; /* Reduce profile image size on mobile */
+    height: 100px;
+  }
+
+  /* Reduce padding and margins for mobile */
+  .profile-card,
+  .post-card {
+    padding: 15px;
+  }
 }
