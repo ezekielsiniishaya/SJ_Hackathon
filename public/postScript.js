@@ -14,7 +14,7 @@ document
 
     try {
       // Send the post data to the server
-      const response = await fetch("http://localhost:5000/api/posts", {
+      const response = await fetch("/api/posts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // Specify that we're sending JSON
