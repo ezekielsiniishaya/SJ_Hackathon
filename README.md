@@ -1,4 +1,12 @@
 # SJ_Hackathon
+**Link to pitchdeck;**
+
+https://gamma.app/docs/ConnectSphere-Empowering-Farmers-Connecting-Communities-wd532hnmtnqqfxk
+
+link to the web app:
+
+https://sj-hackathon.onrender.com/
+
 
 Our project for Social Justice Hackthon
 
@@ -195,6 +203,3 @@ A simple messaging feature allowing users to communicate privately.
 
 
 
-**Link to pitchdeck;**
-
-https://gamma.app/docs/ConnectSphere-Empowering-Farmers-Connecting-Communities-wd532hnmtnqqfxk
