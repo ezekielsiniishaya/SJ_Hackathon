@@ -192,3 +192,9 @@ A simple messaging feature allowing users to communicate privately.
     Admin Panel (Optional): If you want to manage users, posts, or content from the backend, an admin panel can be useful.
     Responsive Design: Ensure all pages are mobile-friendly for a good user experience.
     Dark Mode Option: Offer a toggle for users to switch between light and dark modes.
+
+
+
+**Link to pitchdeck;**
+
+https://gamma.app/docs/ConnectSphere-Empowering-Farmers-Connecting-Communities-wd532hnmtnqqfxk
